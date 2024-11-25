@@ -1,0 +1,316 @@
+{
+    "displayStyle": "grid",
+    "items": [
+        {
+            "title": "Home",
+            "id": "home",
+            "thumbnail": "https://cdn0.iconfinder.com/data/icons/typicons-2/24/home-128.png",
+            "content": {
+                "displayStyle": "grid",
+                "items": [
+                    {
+                        "title": "Feier Jesus 1-20",
+                        "id": "track1",
+                        "thumbnail": "https://i.pinimg.com/236x/6f/9e/44/6f9e44fa0b88c909f61f6de550c65bd4.jpg"
+                    },
+                    {
+                        "title": "Episode 85 - Bitcoin-Aufbewahrung & Wallets mit Florian Drewes",
+                        "id": "track2",
+                        "thumbnail": "https://i.pinimg.com/236x/f0/e3/6d/f0e36d631511d6b1db28e8a8b08369f1.jpg"
+                    },
+                    {
+                        "title": "POPLAND",
+                        "subtitle": "Dein Deutschpop. Deine Welt. Deine Playlist. Cover: revelle, Gregor Hägele",
+                        "id": "track3",
+                        "thumbnail": "https://i.pinimg.com/236x/4d/00/cc/4d00cc86b857024f87b4335447d51943.jpg"
+                    },
+                    {
+                        "title": "Wenn sie nicht wissen, dass wir auch im Chat sind...",
+                        "id": "track4",
+                        "thumbnail": "https://i.pinimg.com/236x/62/90/15/629015a91456c3b429bf1034a5ec602d.jpg"
+                    },
+                    {
+                        "title": "Hot Hits Deutschland",
+                        "subtitle": "Hier ist der Name Programm. Die aktuellen Hits in einer Liste. Cover: Ray Dalton, Alvaro Soler",
+                        "id": "track5",
+                        "thumbnail": "https://i.pinimg.com/236x/38/61/98/3861989daa68a4c9c7d766a31b6afb2e.jpg"
+                    },
+                    {
+                        "title": "Modus Mio",
+                        "subtitle": "Die wichtigste Hip-Hop Playlist Deutschlands. Cover: reezy",
+                        "id": "track6",
+                        "thumbnail": "https://i.pinimg.com/236x/b9/ea/17/b9ea17b4f887f76986ddcec04161d2b0.jpg"
+                    },
+                    {
+                        "title": "Today's Top Hits",
+                        "subtitle": "Ed Sheeran & Taylor Swift are on top of the Hottest 50!",
+                        "id": "track6",
+                        "thumbnail": "https://i.pinimg.com/236x/a7/4f/f9/a74ff9dbd14a38b2d72cf91f7bef0599.jpg",
+                        "content": {
+                            "displayStyle": "list",
+                            "items": [
+                                {
+                                    "title": "Heat Waves",
+                                    "subtitle": "Glass Animals",
+                                    "id": "track9",
+                                    "thumbnail": "https://i.pinimg.com/236x/c6/e7/5d/c6e75d5dc9e79d8c68f567bcb9803cac.jpg"
+                                },
+                                {
+                                    "title": "THATS WHAT I WANT",
+                                    "subtitle": "Lil Nas X",
+                                    "id": "track10",
+                                    "thumbnail": "https://i.pinimg.com/236x/14/8c/c7/148cc7c39f4fa13b9e3c1e3c81b0b079.jpg"
+                                },
+                                {
+                                    "title": "STAY (with Justin Bieber)",
+                                    "subtitle": "The Kid LAROI, Justin Bieber",
+                                    "id": "track11",
+                                    "thumbnail": "https://i.pinimg.com/236x/96/82/b0/9682b05fb580acce59bc90bd0f5654b1.jpg"
+                                },
+                                {
+                                    "title": "The Joker and The Queen (feat. Taylor Swift)",
+                                    "subtitle": "Ed Sheeran, Taylor Swift",
+                                    "id": "track12",
+                                    "thumbnail": "https://i.pinimg.com/236x/a1/a5/5d/a1a55d3abc0fbeb695b4161a7ad2a337.jpg"
+                                },
+                                {
+                                    "title": "abcdefu",
+                                    "subtitle": "GAYLE",
+                                    "id": "track13",
+                                    "thumbnail": "https://i.pinimg.com/236x/ce/71/ba/ce71baa0a58f91184382684c09c1b4b9.jpg"
+                                },
+                                {
+                                    "title": "Ghost",
+                                    "subtitle": "Just Bieber",
+                                    "id": "track14",
+                                    "thumbnail": "https://i.pinimg.com/236x/11/ac/d3/11acd3d9e0f6c927a0a76034b550149b.jpg"
+                                },
+                                {
+                                    "title": "Infinity",
+                                    "subtitle": "Jaymes Young",
+                                    "id": "track15",
+                                    "thumbnail": "https://i.pinimg.com/236x/4c/79/19/4c79190dd85666aa6e5b0f976e9363b0.jpg"
+                                },
+                                {
+                                    "title": "Easy On Me",
+                                    "subtitle": "Adele",
+                                    "id": "track16",
+                                    "thumbnail": "https://i.pinimg.com/236x/97/22/fe/9722fe343c2a1841c792e04b5b1028e7.jpg"
+                                },
+                                {
+                                    "title": "Shivers",
+                                    "subtitle": "Ed Sheeran",
+                                    "id": "track17",
+                                    "thumbnail": "https://i.pinimg.com/236x/9b/65/44/9b65442d41a5716077edbe08a13dfeaf.jpg"
+                                },
+                                {
+                                    "title": "Enemy (with JID) - from the series Arcane League of Legends",
+                                    "subtitle": "Imagine Dragons, JID, Arcane, League of Legends",
+                                    "id": "track18",
+                                    "thumbnail": "https://i.pinimg.com/236x/27/c0/03/27c0031b909b8f6778f9218906bf5ec5.jpg"
+                                },
+                                {
+                                    "title": "Cold Heart - PNAU Remix",
+                                    "subtitle": "Elton John, Dua Lipa, PNAU",
+                                    "id": "track18",
+                                    "thumbnail": "https://i.pinimg.com/236x/2c/ad/c5/2cadc534c41b42538196f967f66ff1ee.jpg"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "title": "Swag!",
+                        "subtitle": "Hier geht's um den Vibe. Cover: AVAION",
+                        "id": "track7",
+                        "thumbnail": "https://i.pinimg.com/236x/23/67/c3/2367c32a03079829ce4b22621b6beab5.jpg"
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Recents",
+            "id": "recently-played",
+            "thumbnail": "https://cdn1.iconfinder.com/data/icons/airline-flight-booking-mobile-app/15/recent-time-search-reload-time-128.png"
+        },
+        {
+            "title": "Browse",
+            "id": "browse",
+            "thumbnail": "https://cdn2.iconfinder.com/data/icons/blocked-out-2/28/internet-128.png",
+            "content": {
+                "displayStyle": "grid",
+                "items": [
+                    {
+                        "title": "Pop",
+                        "id": "track20",
+                        "thumbnail": "https://i.pinimg.com/236x/c0/b5/79/c0b579f36eea3e04bb27903b62ba30e9.jpg"
+                    },
+                    {
+                        "title": "Dance/Electronic",
+                        "id": "track21",
+                        "thumbnail": "https://i.pinimg.com/236x/cc/e5/ac/cce5ac18211e41a037740573edc0ea6d.jpg"
+                    },
+                    {
+                        "title": "Hip-Hop",
+                        "id": "track31",
+                        "thumbnail": "https://i.pinimg.com/236x/71/b1/05/71b105e3696dac9279be45929b6f0540.jpg"
+                    },
+                    {
+                        "title": "Rock",
+                        "id": "track22",
+                        "thumbnail": "https://i.pinimg.com/236x/74/99/c1/7499c1754781cb55eb541e9965c6408a.jpg"
+                    },
+                    {
+                        "title": "Top Lists",
+                        "id": "track23",
+                        "thumbnail": "https://i.pinimg.com/236x/26/f5/67/26f5675d42d4fd37462cae5fce76044e.jpg"
+                    },
+                    {
+                        "title": "Mood",
+                        "id": "track24",
+                        "thumbnail": "https://i.pinimg.com/236x/97/22/fe/9722fe343c2a1841c792e04b5b1028e7.jpg"
+                    },
+                    {
+                        "title": "Chill",
+                        "id": "track25",
+                        "thumbnail": "https://i.pinimg.com/236x/96/5b/eb/965bebed0fad687ae2912ce901477e23.jpg",
+                        "content": {
+                            "displayStyle": "list",
+                            "items": [
+                                {
+                                    "title": "Winter Chillout",
+                                    "id": "track32",
+                                    "thumbnail": "https://i.pinimg.com/236x/2b/d1/59/2bd1599a9dae6ef8342e8ca98d216e7e.jpg"
+                                },
+                                {
+                                    "title": "Chillout Lounge",
+                                    "id": "track33",
+                                    "thumbnail": "https://i.pinimg.com/236x/bd/ae/8c/bdae8c94ae5a330f27c0c14edec10bf1.jpg"
+                                },
+                                {
+                                    "title": "Chilled Indie",
+                                    "id": "track34",
+                                    "thumbnail": "https://i.pinimg.com/236x/23/67/c3/2367c32a03079829ce4b22621b6beab5.jpg"
+                                },
+                                {
+                                    "title": "melancholia",
+                                    "id": "track35",
+                                    "thumbnail": "https://i.pinimg.com/236x/90/4d/7c/904d7c7a897a9d0b229910c980d5d715.jpg"
+                                },
+                                {
+                                    "title": "Jazz Vibes",
+                                    "id": "track36",
+                                    "thumbnail": "https://i.pinimg.com/236x/44/d5/23/44d52379a5eb4a70bcafd580eaad7a09.jpg"
+                                },
+                                {
+                                    "title": "lofi beats",
+                                    "id": "track37",
+                                    "thumbnail": "https://i.pinimg.com/236x/9c/eb/8c/9ceb8ccf19a2dd51e607451bb48f6c42.jpg"
+                                },
+                                {
+                                    "title": "Chill Hits",
+                                    "id": "track38",
+                                    "thumbnail": "https://i.pinimg.com/236x/51/a2/4a/51a24a525c890d63c9ae71b32580f8ae.jpg",
+                                    "content": {
+                                        "displayStyle": "list",
+                                        "items": [
+                                            {
+                                                "title": "Thank you - TikTok Edit",
+                                                "subtitle": "Max + Johann, Paratone",
+                                                "id": "track41",
+                                                "thumbnail": "https://i.pinimg.com/236x/f7/4d/d3/f74dd32a9e001bc45cb5fc14d09ba348.jpg"
+                                            },
+                                            {
+                                                "title": "The Lone Range",
+                                                "subtitle": "NWYR, W&W",
+                                                "id": "track42",
+                                                "thumbnail": "https://i.pinimg.com/236x/60/8e/10/608e1080aec585e3440538e053292c16.jpg"
+                                            },
+                                            {
+                                                "title": "Move Your Body",
+                                                "subtitle": "Öwnboss, Sevek",
+                                                "id": "track43",
+                                                "thumbnail": "https://i.pinimg.com/236x/9b/98/63/9b9863ab969e6a3caa983dbf4e255e60.jpg"
+                                            },
+                                            {
+                                                "title": "Survivors",
+                                                "subtitle": "Harris & Ford",
+                                                "id": "track44",
+                                                "thumbnail": "https://i.pinimg.com/236x/a5/5a/4c/a55a4c5e4d4d1c59508259f2a5753dac.jpg"
+                                            },
+                                            {
+                                                "title": "The Parade",
+                                                "subtitle": "Joel Corry, Da Hool",
+                                                "id": "track45",
+                                                "thumbnail": "https://i.pinimg.com/236x/28/47/24/28472464efe71a1d616230d18a9ec88e.jpg"
+                                            },
+                                            {
+                                                "title": "Baby",
+                                                "subtitle": "Mike Candys",
+                                                "id": "track46",
+                                                "thumbnail": "https://i.pinimg.com/236x/14/8c/c7/148cc7c39f4fa13b9e3c1e3c81b0b079.jpg"
+                                            },
+                                            {
+                                                "title": "Call Me (with R3HAB & Timmy Trumpet)",
+                                                "subtitle": "Gabry Ponte, R3HAB, Timmy Trumpet",
+                                                "id": "track47"
+                                            },
+                                            {
+                                                "title": "Dark Love",
+                                                "subtitle": "DJ Antoine, Flip Capella",
+                                                "id": "track48"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "title": "Klavier zum Entspannen",
+                                    "id": "track39",
+                                    "thumbnail": "https://i.pinimg.com/236x/c6/e7/5d/c6e75d5dc9e79d8c68f567bcb9803cac.jpg"
+                                },
+                                {
+                                    "title": "Jazz in the Background",
+                                    "id": "track40",
+                                    "thumbnail": "https://i.pinimg.com/236x/77/f9/ca/77f9caa7b20f7048cbe15b22e5108490.jpg"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "title": "RADAR",
+                        "id": "track26",
+                        "thumbnail": "https://i.pinimg.com/236x/f2/cd/98/f2cd9827f277ab2e10afd8c740ceaafa.jpg"
+                    },
+                    {
+                        "title": "Fresh Finds",
+                        "id": "track27",
+                        "thumbnail": "https://i.pinimg.com/236x/f0/28/06/f028063a5270ceaa1063b6cbaf313ff5.jpg"
+                    },
+                    {
+                        "title": "EQUAL",
+                        "id": "track28",
+                        "thumbnail": "https://i.pinimg.com/236x/ce/71/ba/ce71baa0a58f91184382684c09c1b4b9.jpg"
+                    },
+                    {
+                        "title": "Party",
+                        "id": "track29",
+                        "thumbnail": "https://i.pinimg.com/236x/0c/8f/e6/0c8fe66ba983f2f9c73e05e8d342bb2a.jpg"
+                    },
+                    {
+                        "title": "In the car",
+                        "id": "track30",
+                        "thumbnail": "https://i.pinimg.com/236x/5f/31/50/5f3150e1d73ccdaf0aabb11980ade147.jpg"
+                    }
+                ]
+            }
+        },
+        {
+            "title": "Library",
+            "id": "library",
+            "thumbnail": "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_library_music_48px-128.png",
+            "content": {
+                "displayStyle": "list",
+                "items": []
+            }
+        }
+    ]
+}
