@@ -1,42 +1,54 @@
 package com.valentibel.mediacenterapp.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.valentibel.medialibrary.model.MediaData
-import com.valentibel.medialibrary.model.RootItem
+import com.valentibel.mediacenterapp.components.MediaItemView
+import com.valentibel.mediacenterapp.data.MediaDataState
+import com.valentibel.mediacenterapp.navigation.MediaScreens
+import com.valentibel.mediacenterapp.utils.Constants.DELIMITER
+import com.valentibel.medialibrary.model.Content
+import com.valentibel.medialibrary.model.MediaItem
+import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel) {
+    Scaffold { innerPadding ->
+        Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+            HomeScreenContent(navController, viewModel)
+        }
+    }
+}
 
-    when (val state = uiState.value) {
+@Composable
+fun HomeScreenContent(navController: NavController, viewModel: HomeScreenViewModel) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    when (val state = uiState) {
         is MediaDataState.Error -> {
             Text(text = state.message.toString(), style = MaterialTheme.typography.bodyLarge, color = Color.Red)
         }
@@ -44,52 +56,54 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
             LinearProgressIndicator()
         }
         is MediaDataState.Success -> {
-            PageViewer(state.data)
+            PageViewer(state.data, navController)
         }
     }
 }
 
 @Composable
-fun PageViewer(data: MediaData) {
+fun PageViewer(data: Content, navController: NavController) {
     val rootItems = data.items
     val pagerState = rememberPagerState(pageCount = {
         rootItems.size
     })
+    val coroutineScope = rememberCoroutineScope()
 
     LazyRow(horizontalArrangement = Arrangement.spacedBy(15.dp)) {
-        items(items = rootItems) { rootItem ->
-            RootItem(rootItem) {
-
+        itemsIndexed(items = rootItems) { index, rootItem ->
+            RootItem(rootItem, index == pagerState.currentPage) {
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(index)
+                }
             }
         }
     }
     HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
-        rootItems[page].content?.items?.let { data ->
+        val content = rootItems[page].content
+        if (content != null && content.items.isNotEmpty()) {
             LazyColumn (verticalArrangement = Arrangement.spacedBy(15.dp)) {
-                items(items = data) { item ->
-                    Row {
-                        AsyncImage(model = item.thumbnail, contentDescription = "image")
-                        Column {
-                            Text(
-                                text = item.title
-                            )
-                            item.subtitle?.let { Text(
-                                text = it
-                            ) }
+                items(items = content.items) { item ->
+                    MediaItemView(item = item) {
+                        if (item.content != null) {
+                            navController.navigate(MediaScreens.DetailsScreen.name+"/${rootItems[page].id}$DELIMITER${item.id}")
                         }
                     }
                 }
             }
-        } ?: run {Text("No items yet")}
-
+        } else {
+            Text("No items yet")
+        }
     }
 }
 
 @Composable
-fun RootItem(rootItem: RootItem, onClick: () -> Unit) {
+fun RootItem(rootItem: MediaItem, isCurrent: Boolean, onClick: () -> Unit) {
     Card(shape = RoundedCornerShape(5.dp),
         colors = CardDefaults.cardColors().copy(
-            containerColor = Color.White
+            containerColor = if (isCurrent)
+                MaterialTheme.colorScheme.tertiary
+            else
+                MaterialTheme.colorScheme.background
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier

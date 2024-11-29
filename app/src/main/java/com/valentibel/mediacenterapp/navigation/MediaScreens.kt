@@ -1,4 +1,6 @@
 package com.valentibel.mediacenterapp.navigation
 
-class MediaScreens {
+enum class MediaScreens {
+    HomeScreen,
+    DetailsScreen
 }
