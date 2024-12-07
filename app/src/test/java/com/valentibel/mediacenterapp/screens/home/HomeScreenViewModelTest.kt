@@ -80,7 +80,7 @@ class HomeScreenViewModelTest {
         // Simulate coroutine completion
         dispatcher.scheduler.advanceUntilIdle()
 
-        // Assert successful state
+        // Assert error state
         assertEquals(MediaDataState.Error(errorMessage), viewModel.uiState.first())
         verify(mockRepository, times(1)).getMediaData()
     }

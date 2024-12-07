@@ -4,12 +4,7 @@ import com.valentibel.medialibrary.api.MediaService
 import com.valentibel.medialibrary.model.Content
 import com.valentibel.medialibrary.model.MediaItem
 import com.valentibel.medialibrary.repository.MediaDataRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -21,23 +16,19 @@ import org.mockito.exceptions.base.MockitoException
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class MediaDataRepositoryTest {
 
-    private val testDispatcher = StandardTestDispatcher()
     private lateinit var mediaService: MediaService
     private lateinit var repository: MediaDataRepository
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
         mediaService = mock(MediaService::class.java)
         repository = MediaDataRepository(mediaService)
     }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
     }
 
    @Test
