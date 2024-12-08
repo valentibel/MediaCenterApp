@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -27,10 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.valentibel.mediacenterapp.components.MediaItemView
+import com.valentibel.mediacenterapp.components.MediaItemsView
 import com.valentibel.mediacenterapp.data.MediaDataState
-import com.valentibel.mediacenterapp.navigation.MediaScreens
-import com.valentibel.mediacenterapp.utils.Constants.DELIMITER
 import com.valentibel.medialibrary.model.Content
 import com.valentibel.medialibrary.model.MediaItem
 import kotlinx.coroutines.launch
@@ -81,15 +77,7 @@ fun PageViewer(data: Content, navController: NavController) {
     HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
         val content = rootItems[page].content
         if (content != null && content.items.isNotEmpty()) {
-            LazyColumn (verticalArrangement = Arrangement.spacedBy(15.dp)) {
-                items(items = content.items) { item ->
-                    MediaItemView(item = item) {
-                        if (item.content != null) {
-                            navController.navigate(MediaScreens.DetailsScreen.name+"/${rootItems[page].id}$DELIMITER${item.id}")
-                        }
-                    }
-                }
-            }
+            MediaItemsView(navController = navController, content = content, path = rootItems[page].id)
         } else {
             Text("No items yet")
         }
