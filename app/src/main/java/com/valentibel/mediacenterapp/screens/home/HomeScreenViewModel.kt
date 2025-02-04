@@ -3,6 +3,8 @@ package com.valentibel.mediacenterapp.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentibel.mediacenterapp.data.MediaDataState
+import com.valentibel.mediacenterapp.utils.Constants.DELIMITER
+import com.valentibel.medialibrary.model.Content
 import com.valentibel.medialibrary.repository.MediaDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,4 +34,13 @@ class HomeScreenViewModel @Inject constructor(private val repository: MediaDataR
                 MediaDataState.Error(message = result.exceptionOrNull()?.message)
             }
         }
+
+    fun getContentByPath(path: String, mediaData: Content): Content? {
+        var content: Content? = mediaData
+        val items = path.split(DELIMITER)
+        for (item in items) {
+            content = content?.items?.firstOrNull{ it.id == item && it.content != null}?.content
+        }
+        return content
+    }
 }
