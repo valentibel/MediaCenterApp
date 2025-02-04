@@ -2,6 +2,7 @@ package com.valentibel.medialibrary
 
 import com.valentibel.medialibrary.api.MediaService
 import com.valentibel.medialibrary.model.Content
+import com.valentibel.medialibrary.model.DisplayStyle
 import com.valentibel.medialibrary.model.MediaItem
 import com.valentibel.medialibrary.repository.MediaDataRepository
 import kotlinx.coroutines.test.runTest
@@ -34,7 +35,7 @@ class MediaDataRepositoryTest {
    @Test
     fun getMediaData_success() = runTest {
         //Given
-       val mockContent = Content(displayStyle = "List", items = listOf(
+       val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
            MediaItem(id = "123", title = "Test title 1"),
            MediaItem(id = "456", title = "Test title 2"),
            MediaItem(id = "789", title = "Test title 3")

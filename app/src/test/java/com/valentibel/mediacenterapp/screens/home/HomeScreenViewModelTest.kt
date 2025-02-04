@@ -1,7 +1,9 @@
 package com.valentibel.mediacenterapp.screens.home
 
 import com.valentibel.mediacenterapp.data.MediaDataState
+import com.valentibel.mediacenterapp.utils.Constants.DELIMITER
 import com.valentibel.medialibrary.model.Content
+import com.valentibel.medialibrary.model.DisplayStyle
 import com.valentibel.medialibrary.model.MediaItem
 import com.valentibel.medialibrary.repository.MediaDataRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +15,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -42,7 +45,7 @@ class HomeScreenViewModelTest {
     @Test
     fun `initial MediaDataState is Loading and then success`() = runTest {
         //Given
-        val mockContent = Content(displayStyle = "List", items = listOf(
+        val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
             MediaItem(id = "123", title = "Test title 1"),
             MediaItem(id = "456", title = "Test title 2"),
             MediaItem(id = "789", title = "Test title 3")
@@ -82,6 +85,81 @@ class HomeScreenViewModelTest {
 
         // Assert error state
         assertEquals(MediaDataState.Error(errorMessage), viewModel.uiState.first())
+        verify(mockRepository, times(1)).getMediaData()
+    }
+
+    @Test
+    fun `getContentByPath success`() = runTest {
+        //Given
+        val validPath = "333${DELIMITER}444"
+        val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
+            MediaItem(id = "123", title = "Test title 1"),
+            MediaItem(id = "456", title = "Test title 2"),
+            MediaItem(id = "789", title = "Test title 3")
+        ))
+        val mockRootContent = Content(displayStyle = DisplayStyle.GRID, items = listOf(
+            MediaItem(id = "111", title = "Root item 1"),
+            MediaItem(id = "222", title = "Root item 2"),
+            MediaItem(id = "333", title = "Root item 3",  content = Content(displayStyle = DisplayStyle.LIST, items = listOf(
+                MediaItem(id = "444", title = "Test title 1", content = mockContent)
+            )))
+        ))
+        `when`(mockRepository.getMediaData()).thenReturn(Result.success(mockRootContent))
+
+        //When
+        viewModel = HomeScreenViewModel(mockRepository)
+
+        //Then
+        // Assert initial loading state
+        assertEquals(MediaDataState.Loading, viewModel.uiState.first())
+
+        // Simulate coroutine completion
+        dispatcher.scheduler.advanceUntilIdle()
+
+        // Assert successful state
+        assertEquals(MediaDataState.Success(mockRootContent), viewModel.uiState.first())
+        verify(mockRepository, times(1)).getMediaData()
+
+        //When
+        val detailsData = viewModel.getContentByPath(
+            path = validPath,
+            mediaData = (viewModel.uiState.first() as MediaDataState.Success).data)
+
+        assertEquals(mockContent, detailsData)
+        verify(mockRepository, times(1)).getMediaData()
+    }
+
+    @Test
+    fun `getContentByPath failure`() = runTest {
+        //Given
+        val invalidPath = "333${DELIMITER}444"
+        val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
+            MediaItem(id = "123", title = "Test title 1"),
+            MediaItem(id = "456", title = "Test title 2"),
+            MediaItem(id = "789", title = "Test title 3")
+        ))
+        `when`(mockRepository.getMediaData()).thenReturn(Result.success(mockContent))
+
+        //When
+        viewModel = HomeScreenViewModel(mockRepository)
+
+        //Then
+        // Assert initial loading state
+        assertEquals(MediaDataState.Loading, viewModel.uiState.first())
+
+        // Simulate coroutine completion
+        dispatcher.scheduler.advanceUntilIdle()
+
+        // Assert successful state
+        assertEquals(MediaDataState.Success(mockContent), viewModel.uiState.first())
+        verify(mockRepository, times(1)).getMediaData()
+
+        //When
+        val detailsData = viewModel.getContentByPath(
+            path = invalidPath,
+            mediaData = (viewModel.uiState.first() as MediaDataState.Success).data)
+
+        assertNull(detailsData)
         verify(mockRepository, times(1)).getMediaData()
     }
 }
