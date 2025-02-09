@@ -13,14 +13,13 @@ composeBom = "2024.04.01"
 coroutinesVersion = "1.9.0"
 hiltAndroidVersion = "2.51.1"
 coilCompose = "3.0.0-rc01"
-mockitoCore = "5.14.2"
-mockitoKotlin = "4.1.0"
 navigationCompose = "2.8.4"
 hiltNavigationCompose = "1.2.0"
 appcompat = "1.6.1"
 material = "1.10.0"
 junitJupiterVersion = "5.8.1"
-converterKotlinxSerialization = "2.11.0"
+retrofitVersion = "2.11.0"
+mockkVersion = "1.13.16"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,9 +49,11 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
-mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 jupiter-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion"}
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkVersion"}
+retrofit = {module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion"}
+converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofitVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -60,4 +61,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroidVersion" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 

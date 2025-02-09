@@ -85,7 +85,6 @@ dependencies {
     implementation(project(":mediaLibrary"))
 
     //testing
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
 }

@@ -1,165 +1,145 @@
 package com.valentibel.mediacenterapp.screens.home
 
+import com.valentibel.datalibrary.model.BasicError
+import com.valentibel.datalibrary.model.Result
 import com.valentibel.mediacenterapp.data.MediaDataState
 import com.valentibel.mediacenterapp.utils.Constants.DELIMITER
 import com.valentibel.medialibrary.model.Content
 import com.valentibel.medialibrary.model.DisplayStyle
 import com.valentibel.medialibrary.model.MediaItem
 import com.valentibel.medialibrary.repository.MediaDataRepository
-import kotlinx.coroutines.Dispatchers
+import io.mockk.clearMocks
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
-import org.mockito.exceptions.base.MockitoException
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
+
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeScreenViewModelTest {
 
-    private val dispatcher = StandardTestDispatcher()
     private lateinit var viewModel: HomeScreenViewModel
-    private lateinit var mockRepository: MediaDataRepository
+    private val mockRepository: MediaDataRepository = mockk()
+    private val testDispatcher = StandardTestDispatcher()
+
+    @get:Rule
+    val mainCoroutineRule = MainCoroutineRule(testDispatcher)
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(dispatcher)
-        mockRepository = mock(MediaDataRepository::class.java)
     }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
+        clearMocks(mockRepository)
     }
 
     @Test
-    fun `initial MediaDataState is Loading and then success`() = runTest {
-        //Given
-        val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
-            MediaItem(id = "123", title = "Test title 1"),
-            MediaItem(id = "456", title = "Test title 2"),
-            MediaItem(id = "789", title = "Test title 3")
-        ))
-        `when`(mockRepository.getMediaData()).thenReturn(Result.success(mockContent))
+    fun `uiState emits Loading and then Success when repository returns data`() = runTest {
+        // Given
+        val mockContent = Content(DisplayStyle.GRID, emptyList())
+        coEvery { mockRepository.getMediaData() } returns Result.Success(mockContent)
 
-        //When
-        viewModel = HomeScreenViewModel(mockRepository)
+        // When
+        viewModel = HomeScreenViewModel(mockRepository) // Trigger init block
+        val initialState = viewModel.uiState.value
+        advanceUntilIdle()
+        val finalState = viewModel.uiState.value
 
-        //Then
-        // Assert initial loading state
-        assertEquals(MediaDataState.Loading, viewModel.uiState.first())
-
-        // Simulate coroutine completion
-        dispatcher.scheduler.advanceUntilIdle()
-
-        // Assert successful state
-        assertEquals(MediaDataState.Success(mockContent), viewModel.uiState.first())
-        verify(mockRepository, times(1)).getMediaData()
+        // Then
+        assertEquals(MediaDataState.Loading, initialState)
+        assertEquals(MediaDataState.Success(mockContent), finalState)
     }
 
     @Test
-    fun `initial MediaDataState is Loading and then failure`() = runTest {
-        //Given
-        val errorMessage = "Error occurred!"
-        `when`(mockRepository.getMediaData()).thenReturn(Result.failure(MockitoException(errorMessage)))
+    fun `uiState emits Loading and then Error when repository returns ApiError`() = runTest {
+        // Given
+        coEvery { mockRepository.getMediaData() } returns Result.Failure(BasicError.ApiError("Error", 500))
 
-        //When
+        // When
         viewModel = HomeScreenViewModel(mockRepository)
+        val initialState = viewModel.uiState.value
+        advanceUntilIdle()
+        val finalState = viewModel.uiState.value
 
-        //Then
-        // Assert initial loading state
-        assertEquals(MediaDataState.Loading, viewModel.uiState.first())
-
-        // Simulate coroutine completion
-        dispatcher.scheduler.advanceUntilIdle()
-
-        // Assert error state
-        assertEquals(MediaDataState.Error(errorMessage), viewModel.uiState.first())
-        verify(mockRepository, times(1)).getMediaData()
+        // Then
+        assertEquals(MediaDataState.Loading, initialState)
+        assertEquals(MediaDataState.Error("Api Error"), finalState)
     }
 
     @Test
-    fun `getContentByPath success`() = runTest {
-        //Given
-        val validPath = "333${DELIMITER}444"
-        val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
-            MediaItem(id = "123", title = "Test title 1"),
-            MediaItem(id = "456", title = "Test title 2"),
-            MediaItem(id = "789", title = "Test title 3")
-        ))
-        val mockRootContent = Content(displayStyle = DisplayStyle.GRID, items = listOf(
-            MediaItem(id = "111", title = "Root item 1"),
-            MediaItem(id = "222", title = "Root item 2"),
-            MediaItem(id = "333", title = "Root item 3",  content = Content(displayStyle = DisplayStyle.LIST, items = listOf(
-                MediaItem(id = "444", title = "Test title 1", content = mockContent)
-            )))
-        ))
-        `when`(mockRepository.getMediaData()).thenReturn(Result.success(mockRootContent))
+    fun `uiState emits Loading and then Error when repository returns NetworkError`() = runTest {
+        // Given
+        coEvery { mockRepository.getMediaData() } returns Result.Failure(BasicError.NetworkError)
 
-        //When
+        // When
         viewModel = HomeScreenViewModel(mockRepository)
+        val initialState = viewModel.uiState.value
+        advanceUntilIdle()
+        val finalState = viewModel.uiState.value
 
-        //Then
-        // Assert initial loading state
-        assertEquals(MediaDataState.Loading, viewModel.uiState.first())
-
-        // Simulate coroutine completion
-        dispatcher.scheduler.advanceUntilIdle()
-
-        // Assert successful state
-        assertEquals(MediaDataState.Success(mockRootContent), viewModel.uiState.first())
-        verify(mockRepository, times(1)).getMediaData()
-
-        //When
-        val detailsData = viewModel.getContentByPath(
-            path = validPath,
-            mediaData = (viewModel.uiState.first() as MediaDataState.Success).data)
-
-        assertEquals(mockContent, detailsData)
-        verify(mockRepository, times(1)).getMediaData()
+        // Then
+        assertEquals(MediaDataState.Loading, initialState)
+        assertEquals(MediaDataState.Error("Network Error"), finalState)
     }
 
     @Test
-    fun `getContentByPath failure`() = runTest {
-        //Given
-        val invalidPath = "333${DELIMITER}444"
-        val mockContent = Content(displayStyle = DisplayStyle.LIST, items = listOf(
-            MediaItem(id = "123", title = "Test title 1"),
-            MediaItem(id = "456", title = "Test title 2"),
-            MediaItem(id = "789", title = "Test title 3")
-        ))
-        `when`(mockRepository.getMediaData()).thenReturn(Result.success(mockContent))
+    fun `uiState emits Loading and then Error when repository returns UnknownError`() = runTest {
+        // Given
+        coEvery { mockRepository.getMediaData() } returns Result.Failure(BasicError.UnknownError(Exception("Unknown")))
 
-        //When
+        // When
         viewModel = HomeScreenViewModel(mockRepository)
+        val initialState = viewModel.uiState.value
+        advanceUntilIdle()
+        val finalState = viewModel.uiState.value
 
-        //Then
-        // Assert initial loading state
-        assertEquals(MediaDataState.Loading, viewModel.uiState.first())
+        // Then
+        assertEquals(MediaDataState.Loading, initialState)
+        assertEquals(MediaDataState.Error("Please try again later!"), finalState)
+    }
 
-        // Simulate coroutine completion
-        dispatcher.scheduler.advanceUntilIdle()
+    @Test
+    fun `getContentByPath returns correct content`() = runTest  {
+        // Given
+        val targetContent = Content(DisplayStyle.LIST, emptyList())
+        val nestedItem = MediaItem(content = targetContent, id = "nested", title = "Nested")
+        val rootContent = Content(DisplayStyle.GRID, listOf(MediaItem(id = "root", title = "Root", content = Content(DisplayStyle.LIST, listOf(nestedItem)))))
+        coEvery { mockRepository.getMediaData() } returns Result.Success(rootContent)
 
-        // Assert successful state
-        assertEquals(MediaDataState.Success(mockContent), viewModel.uiState.first())
-        verify(mockRepository, times(1)).getMediaData()
+        // When
+        viewModel = HomeScreenViewModel(mockRepository)
+        advanceUntilIdle()
+        val finalState = viewModel.uiState.value
+        val result = viewModel.getContentByPath("root${DELIMITER}nested")
 
-        //When
-        val detailsData = viewModel.getContentByPath(
-            path = invalidPath,
-            mediaData = (viewModel.uiState.first() as MediaDataState.Success).data)
+        // Then
+        assertEquals(MediaDataState.Success(rootContent), finalState)
+        assertEquals(targetContent, result)
+    }
 
-        assertNull(detailsData)
-        verify(mockRepository, times(1)).getMediaData()
+    @Test
+    fun `getContentByPath returns null if path is incorrect`() = runTest  {
+        // Given
+        val rootContent = Content(DisplayStyle.GRID, listOf(MediaItem(id = "root", title = "Root", content = Content(DisplayStyle.LIST, emptyList()))))
+        coEvery { mockRepository.getMediaData() } returns Result.Success(rootContent)
+
+        // When
+        viewModel = HomeScreenViewModel(mockRepository)
+        advanceUntilIdle()
+        val finalState = viewModel.uiState.value
+        val result = viewModel.getContentByPath("root${DELIMITER}invalid")
+
+        // Then
+        assertEquals(MediaDataState.Success(rootContent), finalState)
+        assertNull(result)
     }
 }

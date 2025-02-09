@@ -5,8 +5,7 @@ plugins {
     //Hilt-Dagger
     id("kotlin-kapt")
     alias(libs.plugins.hilt.android)
-
-    kotlin("plugin.serialization") version "2.0.21"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -52,14 +51,18 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
 
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.kotlinx.serialization)
+
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
+    //json
     implementation(libs.kotlinx.serialization.json)
 
     //testing
     testImplementation(libs.jupiter.junit.jupiter)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }

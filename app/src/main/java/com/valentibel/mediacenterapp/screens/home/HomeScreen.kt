@@ -1,7 +1,11 @@
 package com.valentibel.mediacenterapp.screens.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -13,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -42,7 +47,9 @@ fun HomeScreen(viewModel: HomeScreenViewModel) {
         }
         is MediaDataState.Loading -> {
             Scaffold { innerPadding ->
-                Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+                Column(modifier = Modifier.padding(innerPadding).fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally) {
                     LinearProgressIndicator()
                 }
             }
@@ -120,7 +127,9 @@ fun NavGraphBuilder.tabNavGraph(navController: NavController, destination: TopLe
 @Composable
 fun ErrorScreen(message: String) {
     Scaffold { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+        Column(modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = message, style = MaterialTheme.typography.bodyLarge, color = Color.Red)
         }
     }
@@ -138,11 +147,15 @@ fun DetailsScreenContent(navController: NavController, viewModel: HomeScreenView
             LinearProgressIndicator()
         }
         is MediaDataState.Success -> {
-            val content = viewModel.getContentByPath(path, state.data)
+            val content = viewModel.getContentByPath(path)
             if (content != null && content.items.isNotEmpty()) {
                 MediaItemsView(navController, content, path)
             } else {
-                Text(text = "No items yet", style = MaterialTheme.typography.bodyLarge)
+                Row {
+                    Spacer(modifier = Modifier.weight(0.5f))
+                    Text(text = "No items yet", style = MaterialTheme.typography.bodyLarge)
+                    Spacer(modifier = Modifier.weight(0.5f))
+                }
             }
         }
     }
